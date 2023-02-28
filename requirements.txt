@@ -1,0 +1,9 @@
+#
+# This file must define the plugin requirements to install
+# in BEMServer UI python virtual env:
+#
+#    pip install -r requirements.txt
+#
+
+# For example:
+#pandas==1.5.3
