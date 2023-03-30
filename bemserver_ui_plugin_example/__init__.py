@@ -1,6 +1,6 @@
 """BEMServer UI plugin"""
 from . import views
-from .plugin import PLUGIN_INFO, REQUIRED_UI_VERSION  # noqa
+from .plugin import PLUGIN_INFO, REQUIRED_UI_VERSION, get_sidebar  # noqa
 
 
 __version__ = "0.1.0"
