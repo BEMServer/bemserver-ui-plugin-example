@@ -3,7 +3,7 @@ from . import views
 from .plugin import PLUGIN_INFO, REQUIRED_UI_VERSION, get_sidebar  # noqa
 
 
-__version__ = "0.2.0"
+__version__ = "0.2.1"
 
 
 def init_app(app):
