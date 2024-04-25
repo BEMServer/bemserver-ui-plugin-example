@@ -1,4 +1,5 @@
 """Plugin views"""
+
 import flask
 from pathlib import Path
 

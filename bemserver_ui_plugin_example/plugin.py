@@ -1,4 +1,5 @@
 """BEMServer UI plugin"""
+
 from packaging.version import Version
 
 
@@ -70,23 +71,27 @@ def get_sidebar(campaign_ctxt):
 
     # Add an entry that requires a campaign context existence.
     if campaign_ctxt.has_campaign:
-        sidebar["dashboards"].append({
-            "endpoint_kwargs": {"endpoint": f"{PLUGIN_PREFIX}.stats.stats"},
-            "icon_classes": ["bi", "bi-123", "text-success"],
-            "text": "Data statistics #1",
-        })
+        sidebar["dashboards"].append(
+            {
+                "endpoint_kwargs": {"endpoint": f"{PLUGIN_PREFIX}.stats.stats"},
+                "icon_classes": ["bi", "bi-123", "text-success"],
+                "text": "Data statistics #1",
+            }
+        )
 
     # Add an entry that do not require a campaign context.
-    sidebar["dashboards"].append({
-        "endpoint_kwargs": {
-            "endpoint": f"{PLUGIN_PREFIX}.stats.stats",
-            "whatever_kwarg": "yep",
-        },
-        "icon_endpoint_kwargs": {
-            "endpoint": f"{PLUGIN_PREFIX}.static",
-            "filename": "images/bootstrap.svg",
-        },
-        "text": "Data statistics #2",
-    })
+    sidebar["dashboards"].append(
+        {
+            "endpoint_kwargs": {
+                "endpoint": f"{PLUGIN_PREFIX}.stats.stats",
+                "whatever_kwarg": "yep",
+            },
+            "icon_endpoint_kwargs": {
+                "endpoint": f"{PLUGIN_PREFIX}.static",
+                "filename": "images/bootstrap.svg",
+            },
+            "text": "Data statistics #2",
+        }
+    )
 
     return sidebar
