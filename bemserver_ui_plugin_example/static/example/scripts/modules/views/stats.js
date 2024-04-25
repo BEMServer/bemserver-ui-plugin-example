@@ -1,17 +1,15 @@
 // Import modules from BEMServer UI ("/static/...").
-import { flaskES6 } from "/static/scripts/app.js";
+import { app } from "/static/scripts/app.js";
 import { InternalAPIRequest } from "/static/scripts/modules/tools/fetcher.js";
-import { FlashMessageTypes, FlashMessage } from "/static/scripts/modules/components/flash.js";
 import { Spinner } from "/static/scripts/modules/components/spinner.js";
 import "/static/scripts/modules/components/eventLevel.js";
 
 
-export class StatsView {
+class StatsView {
 
     #internalAPIRequester = null;
     #getReqID = null;
 
-    #messagesElmt = null;
     #getBtnElmt = null;
     #getBtnLoadingElmt = null;
 
@@ -20,7 +18,6 @@ export class StatsView {
     }
 
     #cacheDOM() {
-        this.#messagesElmt = document.getElementById("messages");
         this.#getBtnElmt = document.getElementById("getBtn");
         this.#getBtnLoadingElmt = document.getElementById("getBtnLoading");
     }
@@ -32,13 +29,15 @@ export class StatsView {
             this.#getBtnLoadingElmt.innerHTML = "";
             this.#getBtnLoadingElmt.appendChild(new Spinner({ useSmallSize: true }));
 
+            this.#getBtnElmt.setAttribute("disabled", true);
+
             if (this.#getReqID != null) {
                 this.#internalAPIRequester.abort(this.#getReqID);
                 this.#getReqID = null;
             }
 
             this.#getReqID = this.#internalAPIRequester.get(
-                flaskES6.urlFor(`api.notifications.retrieve_count`, {read: false}),
+                app.urlFor(`api.notifications.retrieve_count`, {read: false}),
                 (data) => {
                     let msgContent = `<p>No <span class="fw-bold">unread</span> notifications.</p>`;
                     if (data.data.total > 0) {
@@ -50,15 +49,14 @@ export class StatsView {
                         msgContent += `</ul>`;
                     }
 
-                    let flashMsgElmt = new FlashMessage({type: FlashMessageTypes.INFO, text: msgContent, isDismissible: true, isTimed: false});
-                    this.#messagesElmt.appendChild(flashMsgElmt);
+                    app.flashMessage(msgContent, "info");
                 },
                 (error) => {
-                    let flashMsgElmt = new FlashMessage({type: FlashMessageTypes.ERROR, text: error.toString(), isDismissible: true});
-                    this.#messagesElmt.appendChild(flashMsgElmt);
+                    app.flashMessage(error.toString(), "error");
                 },
                 () => {
                     this.#getBtnLoadingElmt.innerHTML = "";
+                    this.#getBtnElmt.removeAttribute("disabled");
                 },
             );
         });
@@ -69,3 +67,9 @@ export class StatsView {
         this.#initEventListeners();
     }
 }
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    let view = new StatsView();
+    view.mount();
+});

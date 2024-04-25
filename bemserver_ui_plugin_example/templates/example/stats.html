@@ -123,16 +123,6 @@
 {{ super() -}}
 {% filter indent(width=8, first=True) %}
 <script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous" async></script>
-<script type="module">
-    import { StatsView } from "{{ url_for(plugin_prefix + '.static', filename='scripts/modules/views/stats.js') }}";
-
-
-    document.addEventListener("DOMContentLoaded", () => {
-
-        let view = new StatsView();
-        view.mount();
-
-    });
-</script>
+<script type="module" src="{{ url_for(plugin_prefix + '.static', filename='scripts/modules/views/stats.js') }}" defer></script>
 {% endfilter %}
 {% endblock body_scripts %}
