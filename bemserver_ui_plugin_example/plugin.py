@@ -17,8 +17,8 @@ PLUGIN_INFO = {
 
 # min <= UI_VERSION < max
 REQUIRED_UI_VERSION = {
-    "min": Version("0.7.0"),
-    "max": Version("0.8.0"),
+    "min": Version("0.9.0"),
+    "max": Version("0.10.0"),
 }
 
 
